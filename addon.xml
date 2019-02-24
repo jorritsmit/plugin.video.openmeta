@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.openmeta" name="OpenMeta" version="1.0.5" provider-name="A4K">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
@@ -6,19 +6,12 @@
 		<import addon="script.module.futures" version="2.2.0"/>
 		<import addon="script.module.requests" version="2.19.1"/>
 		<import addon="script.module.requests-cache" version="0.4.13"/>
+        <import addon="context.openmeta" version="0.1"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="addon.py">
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.service" library="service.py"/>
-	<extension point="kodi.context.item">
-		<menu id="kodi.core.main">
-			<item library="context.py">
-				<label>OpenMeta</label>
-				<visible>String.IsEqual(ListItem.dbtype,movie) | String.IsEqual(ListItem.dbtype,episode)</visible>
-			</item>
-		</menu>
-	</extension>
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<summary lang="en">TMDb, TVDb and Trakt browser</summary>
