@@ -73,7 +73,7 @@ class KeyboardMonitor(threading.Thread):
 				self.release()
 
 	def prep_search_str(self, string):
-		t_text = text.to_unicode(string)
+		t_text = text.to_str(string)
 		for chr in t_text:
 			if ord(chr) >= 1488 and ord(chr) <= 1514:
 				return text.to_utf8(string[::-1])
@@ -142,7 +142,7 @@ class Lister:
 		if pattern == '{season}x{episode}' and season_infolabel_match and episode_infolabel_match:
 			return True
 		label = item['label']
-		pattern = text.to_unicode(pattern)
+		pattern = text.to_str(pattern)
 		pattern = pattern.replace('$$', r'($|^|\s|\]|\[)')
 		first_season = False
 		if '{season}' in pattern and '1' == str(parameters.get('season')):
@@ -151,8 +151,8 @@ class Lister:
 		pattern = text.apply_parameters(pattern, parameters)    
 		for c in IGNORE_CHARS:
 			label = label.replace(c, ' ')
-		pattern = text.to_unicode(text.to_utf8(pattern))
-		label = text.to_unicode(text.to_utf8(label))
+		pattern = text.to_str(text.to_utf8(pattern))
+		label = text.to_str(text.to_utf8(label))
 		if '$INFO[' in pattern:
 			m = re.search('\\[(.*?)\]', pattern)
 			info = m.group(1)
@@ -170,7 +170,7 @@ class Lister:
 			label = re.sub(r'\[[^)].*?\]', '', label)
 			pattern = pattern.strip('><')
 		plugin.log.debug('matching pattern %s to label %s' % (text.to_utf8(pattern), text.to_utf8(label)))
-		r = re.compile(pattern, re.I|re.UNICODE)
+		r = re.compile(pattern, re.I|re.str)
 		match = r.match(label)
 		if ', The' in label and match is None:
 			label = u'The ' + label.replace(', The', '')

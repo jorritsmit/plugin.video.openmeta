@@ -311,7 +311,7 @@ class ListItem(object):
 			if hasattr(properties, 'items'):
 				properties = properties.items()
 			for key, val in properties:
-				if not isinstance(val, (str, unicode)):
+				if not isinstance(val, (str, str)):
 					val = str(val)
 				listitem.set_property(key, val)
 		if stream_info:
@@ -440,7 +440,7 @@ class XBMCMixin(object):
 		value = self.addon.getSetting(key)
 		if converter is str:
 			return value
-		elif converter is unicode:
+		elif converter is str:
 			return value.decode('utf-8')
 		elif converter is bool:
 			return value == 'true'
@@ -454,7 +454,7 @@ class XBMCMixin(object):
 			except:
 				return value
 		else:
-			raise TypeError('Acceptable converters are str, unicode, bool and int. Acceptable choices are instances of list  or tuple.')
+			raise TypeError('Acceptable converters are str, str, bool and int. Acceptable choices are instances of list  or tuple.')
 
 	def set_setting(self, key, val):
 		if isinstance(val, list) or isinstance(val, dict):

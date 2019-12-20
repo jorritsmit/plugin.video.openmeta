@@ -41,7 +41,7 @@ def json_query(query):
 		query['id'] = 1
 	xbmc_request = json.dumps(query)
 	raw = xbmc.executeJSONRPC(xbmc_request)
-	clean = unicode(raw, 'utf-8', errors='ignore')
+	clean = str(raw, 'utf-8', errors='ignore')
 	response = json.loads(clean)
 	if 'error' in response:
 		raise RPCError(response['error'])

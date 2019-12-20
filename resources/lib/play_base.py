@@ -99,7 +99,7 @@ def resolve_player(player, lister, params):
 			if not lang in params:
 				continue
 			parameters = params[lang]
-			link = text.apply_parameters(text.to_unicode(command['link']), parameters)
+			link = text.apply_parameters(text.to_str(command['link']), parameters)
 			if link == 'movies' and player.media == 'movies':
 				video = tools.get_movie_from_library(parameters['imdb'])
 				if video:
@@ -118,7 +118,7 @@ def resolve_player(player, lister, params):
 						'action': command.get('action', 'PLAY')
 					})
 			else:
-				steps = [text.to_unicode(step) for step in command['steps']]
+				steps = [text.to_str(step) for step in command['steps']]
 				files, dirs = lister.get(link, steps, parameters)
 				if files:
 					command_group_results += [

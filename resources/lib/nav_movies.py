@@ -15,7 +15,7 @@ from resources.lib.xswift2 import plugin
 
 enablefanart = plugin.get_setting('enablefanart', bool)
 countenabled = plugin.get_setting('countenabled', bool)
-traktenabled = True if plugin.get_setting('trakt_access_token', unicode) != '' else False
+traktenabled = True if plugin.get_setting('trakt_access_token', str) != '' else False
 SORT = [
 	xbmcplugin.SORT_METHOD_UNSORTED,
 	xbmcplugin.SORT_METHOD_LABEL,
@@ -250,7 +250,7 @@ def tmdb_movies_play_random_genre(id):
 @plugin.route('/movies/add_to_library/<src>/<id>')
 def movies_add_to_library(src, id):
 	from resources.lib.TheMovieDB import Movies
-	library_folder = lib_movies.setup_library(plugin.get_setting('movies_library_folder', unicode))
+	library_folder = lib_movies.setup_library(plugin.get_setting('movies_library_folder', str))
 	if library_folder == False:
 		return
 	date = None
@@ -279,12 +279,12 @@ def movies_add_to_library(src, id):
 	if libmovie != []:
 		return
 	lib_movies.add_movie_to_library(library_folder, src, id)
-	tools.scan_library(path=plugin.get_setting('movies_library_folder', unicode))
+	tools.scan_library(path=plugin.get_setting('movies_library_folder', str))
 
 @plugin.route('/movies/add_to_library_parsed/<src>/<id>/<player>')
 def movies_add_to_library_parsed(src, id, player):
 	from resources.lib.TheMovieDB import Movies
-	library_folder = lib_movies.setup_library(plugin.get_setting('movies_library_folder', unicode))
+	library_folder = lib_movies.setup_library(plugin.get_setting('movies_library_folder', str))
 	date = None
 	if src == 'tmdb':
 		movie = Movies(id).info()
@@ -295,15 +295,15 @@ def movies_add_to_library_parsed(src, id, player):
 				src = 'imdb'
 				id = imdb_id
 	lib_movies.add_movie_to_library(library_folder, src, id, player)
-	tools.scan_library(path=plugin.get_setting('movies_library_folder', unicode))
+	tools.scan_library(path=plugin.get_setting('movies_library_folder', str))
 
 def movies_add_all_to_library(items, noscan=False):
-	library_folder = lib_movies.setup_library(plugin.get_setting('movies_library_folder', unicode))
+	library_folder = lib_movies.setup_library(plugin.get_setting('movies_library_folder', str))
 	if 'results' in items:
 		ids = '\n'.join([str(r['id']) for r in items['results']])
 	else:
 		ids = '\n'.join([i['movie']['ids']['imdb'] if i['movie']['ids']['imdb'] != None and i['movie']['ids']['imdb'] != '' else str(i['movie']['ids']['tmdb']) for i in items])
-	movies_batch_add_file = plugin.get_setting('movies_batch_add_file_path', unicode)
+	movies_batch_add_file = plugin.get_setting('movies_batch_add_file_path', str)
 	if xbmcvfs.exists(movies_batch_add_file):
 		batch_add_file = xbmcvfs.File(movies_batch_add_file)
 		pre_ids = batch_add_file.read()
@@ -321,7 +321,7 @@ def movies_add_all_to_library(items, noscan=False):
 @plugin.route('/movies/batch_add_to_library')
 def movies_batch_add_to_library():
 	from resources.lib.TheMovieDB import Movies
-	movie_batch_file = plugin.get_setting('movies_batch_add_file_path', unicode)
+	movie_batch_file = plugin.get_setting('movies_batch_add_file_path', str)
 	if xbmcvfs.exists(movie_batch_file):
 		try:
 			f = open(xbmc.translatePath(movie_batch_file), 'r')
@@ -330,7 +330,7 @@ def movies_batch_add_to_library():
 			ids = r.split('\n')
 		except:
 			plugin.notify('Movies', 'not found', plugin.get_addon_icon(), 3000)
-		library_folder = lib_movies.setup_library(plugin.get_setting('movies_library_folder', unicode))
+		library_folder = lib_movies.setup_library(plugin.get_setting('movies_library_folder', str))
 		for id in ids:
 			if ',' in id:
 				csvs = id.split(',')

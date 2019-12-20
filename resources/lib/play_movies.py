@@ -17,7 +17,7 @@ def play_movie(tmdb_id, usedefault):
 		play_base.action_cancel()
 		return
 	if usedefault == 'True':
-		default = plugin.get_setting('moviesdefault', unicode)
+		default = plugin.get_setting('moviesdefault', str)
 		for player in players:
 			if player.title == default:
 			 	players = [player]
@@ -37,7 +37,7 @@ def play_movie(tmdb_id, usedefault):
 		if trakt_ids != None:
 			params[lang].update(trakt_ids)
 		params[lang]['info'] = movie_info
-		params[lang] = text.to_unicode(params[lang])
+		params[lang] = text.to_str(params[lang])
 	link = play_base.on_play_video(players, params, trakt_ids)
 	if link:
 		movie = Movies(tmdb_id).info(language='en')

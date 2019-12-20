@@ -3,13 +3,13 @@ import json
 import xbmc
 import xbmcgui
 import xbmcvfs
-from resources.lib.text import to_unicode
+from resources.lib.text import to_str
 
 class AddonPlayer(object):
 	def __init__(self, filename, media, meta):
 		self.media = media
 		self.title = meta['name']
-		self.clean_title = re.compile(r'\[/?(?:color|b|i|u).*?\]', re.I|re.UNICODE).sub('', self.title)
+		self.clean_title = re.compile(r'\[/?(?:color|b|i|u).*?\]', re.I|re.str).sub('', self.title)
 		self.pluginid = meta.get('plugin')
 		self.id = meta.get('id', filename.replace('.json', ''))
 		self.order = meta.get('priority')
@@ -63,7 +63,7 @@ def sort_players(players, filters={}):
 			value = player.filters.get(filter_key)
 			if value:
 				checked = True
-				if to_unicode(value) != to_unicode(filter_value):
+				if to_str(value) != to_str(filter_value):
 					filtered = True
 		if not filtered:
 			needs_browsing = False

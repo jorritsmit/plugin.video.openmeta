@@ -83,7 +83,7 @@ def update_library_from_settings():
 @plugin.route('/update_players')
 @plugin.route('/update_players/<url>', name='players_update_url')
 def update_players(url=None):
-	url = plugin.get_setting('players_update_url', unicode)
+	url = plugin.get_setting('players_update_url', str)
 	if updater.update_players(url):
 		plugin.notify('OpenMeta players update', 'Done', plugin.get_addon_icon(), 3000)
 	else:
@@ -101,8 +101,8 @@ def total_setup():
 @plugin.route('/setup/silent')
 def silent_setup():
 	plugin.setProperty('totalopenmeta', 'true')
-	movielibraryfolder = plugin.get_setting('movies_library_folder', unicode)
-	tvlibraryfolder = plugin.get_setting('tv_library_folder', unicode)
+	movielibraryfolder = plugin.get_setting('movies_library_folder', str)
+	tvlibraryfolder = plugin.get_setting('tv_library_folder', str)
 	try:
 		lib_movies.auto_movie_setup(movielibraryfolder)
 		lib_tvshows.auto_tvshows_setup(tvlibraryfolder)
@@ -114,7 +114,7 @@ def silent_setup():
 @plugin.route('/setup/players')
 def players_setup():
 	plugin.setProperty('openmeta_players_setup', 'true')
-	url = plugin.get_setting('players_update_url', unicode)
+	url = plugin.get_setting('players_update_url', str)
 	if url == '':
 		if plugin.yesno('OpenMeta players setup', 'Would you like to set a URL for players now?'):
 			plugin.open_settings()
@@ -129,8 +129,8 @@ def players_setup():
 
 @plugin.route('/setup/sources')
 def sources_setup():
-	movielibraryfolder = plugin.get_setting('movies_library_folder', unicode)
-	tvlibraryfolder = plugin.get_setting('tv_library_folder', unicode)
+	movielibraryfolder = plugin.get_setting('movies_library_folder', str)
+	tvlibraryfolder = plugin.get_setting('tv_library_folder', str)
 	try:
 		lib_movies.auto_movie_setup(movielibraryfolder)
 		lib_tvshows.auto_tvshows_setup(tvlibraryfolder)

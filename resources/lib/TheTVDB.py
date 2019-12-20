@@ -15,7 +15,7 @@ else:
 	API_key = 'AB2ED64C9BE51811'
 
 def to_bytes(text):
-	if isinstance(text, unicode):
+	if isinstance(text, str):
 		text = text.encode('utf-8')
 	return text
 

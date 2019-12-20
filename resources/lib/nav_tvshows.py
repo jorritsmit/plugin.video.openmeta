@@ -16,7 +16,7 @@ from resources.lib.xswift2 import plugin
 enablefanart = plugin.get_setting('enablefanart', bool)
 specialsenabled = plugin.get_setting('include_specials', bool)
 countenabled = plugin.get_setting('countenabled', bool)
-traktenabled = True if plugin.get_setting('trakt_access_token', unicode) != '' else False
+traktenabled = True if plugin.get_setting('trakt_access_token', str) != '' else False
 SORT = [
 	xbmcplugin.SORT_METHOD_UNSORTED,
 	xbmcplugin.SORT_METHOD_LABEL,
@@ -272,26 +272,26 @@ def tv_add_to_library_parsed(id, player):
 			id = TVDB.search_by_imdb(id)
 		except:
 			plugin.ok('TV show not found', 'no show information found for %s in TheTVDB' % id)
-	library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', unicode))
+	library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', str))
 	show = TVDB[int(id)]
 	imdb = show['imdb_id']
-	library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', unicode))
+	library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', str))
 	if lib_tvshows.add_tvshow_to_library(library_folder, show, player):
 		plugin.setProperty('plugin.video.openmeta.clean_library', 'true')
-	tools.scan_library(path=plugin.get_setting('tv_library_folder', unicode))
+	tools.scan_library(path=plugin.get_setting('tv_library_folder', str))
 
 @plugin.route('/tv/add_to_library/<id>')
 def tv_add_to_library(id):
-	library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', unicode))
+	library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', str))
 	show = TVDB[int(id)]
 	imdb = show['imdb_id']
-	library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', unicode))
+	library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', str))
 	if lib_tvshows.add_tvshow_to_library(library_folder, show):
 		plugin.setProperty('plugin.video.openmeta.clean_library', 'true')
-	tools.scan_library(path=plugin.get_setting('tv_library_folder', unicode))
+	tools.scan_library(path=plugin.get_setting('tv_library_folder', str))
 
 def tv_add_all_to_library(items, noscan=False):
-	library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', unicode))
+	library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', str))
 	ids = ''
 	if 'results' in items:
 		preids = []
@@ -301,7 +301,7 @@ def tv_add_all_to_library(items, noscan=False):
 		ids = '\n'.join(preids)
 	else:
 		ids = '\n'.join([str(i['show']['ids']['tvdb']) if i['show']['ids']['tvdb'] != None and i['show']['ids']['tvdb'] != '' else i['show']['ids']['imdb'] for i in items])
-	shows_batch_add_file = plugin.get_setting('tv_batch_add_file_path', unicode)
+	shows_batch_add_file = plugin.get_setting('tv_batch_add_file_path', str)
 	if xbmcvfs.exists(shows_batch_add_file):
 		batch_add_file = xbmcvfs.File(shows_batch_add_file)
 		pre_ids = batch_add_file.read()
@@ -318,7 +318,7 @@ def tv_add_all_to_library(items, noscan=False):
 
 @plugin.route('/tv/batch_add_to_library')
 def tv_batch_add_to_library():
-	tv_batch_file = plugin.get_setting('tv_batch_add_file_path', unicode)
+	tv_batch_file = plugin.get_setting('tv_batch_add_file_path', str)
 	if xbmcvfs.exists(tv_batch_file):
 		try:
 			f = open(xbmc.translatePath(tv_batch_file), 'r')
@@ -327,7 +327,7 @@ def tv_batch_add_to_library():
 			ids = r.split('\n')
 		except:
 			plugin.notify('TV shows', 'not found', plugin.get_addon_icon(), 3000)
-		library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', unicode))
+		library_folder = lib_tvshows.setup_library(plugin.get_setting('tv_library_folder', str))
 		ids_index = 0
 		for id in ids:
 			if id == None or id == 'None':

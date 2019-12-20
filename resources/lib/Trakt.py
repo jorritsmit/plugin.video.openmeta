@@ -33,7 +33,7 @@ def call_trakt(path, params={}, data=None, is_delete=False, with_auth=True, pagi
 					trakt_refresh_token()
 			except:
 				pass
-			token = plugin.get_setting('trakt_access_token', unicode)
+			token = plugin.get_setting('trakt_access_token', str)
 			if token:
 				headers['Authorization'] = 'Bearer ' + token
 		if data is not None:
@@ -116,7 +116,7 @@ def trakt_refresh_token():
 		'client_secret': CLIENT_SECRET,
 		'redirect_uri': 'urn:ietf:wg:oauth:2.0:oob',
 		'grant_type': 'refresh_token',
-		'refresh_token': plugin.get_setting('trakt_refresh_token', unicode)
+		'refresh_token': plugin.get_setting('trakt_refresh_token', str)
 		}
 	response = call_trakt('oauth/token', data=data, with_auth=False)
 	if response:

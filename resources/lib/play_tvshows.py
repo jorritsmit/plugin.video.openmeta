@@ -30,7 +30,7 @@ def play_episode(id, season, episode, usedefault):
 		play_base.action_cancel()
 		return
 	if usedefault == 'True':
-		default = plugin.get_setting('tvshowsdefault', unicode)
+		default = plugin.get_setting('tvshowsdefault', str)
 		for player in players:
 			if player.title == default:
 			 	players = [player]
@@ -53,7 +53,7 @@ def play_episode(id, season, episode, usedefault):
 		if trakt_ids != None:
 			params[lang].update(trakt_ids)
 		params[lang]['info'] = show_info
-		params[lang] = text.to_unicode(params[lang])
+		params[lang] = text.to_str(params[lang])
 	link = play_base.on_play_video(players, params, trakt_ids)
 	if link:
 		plugin.setProperty('plugin.video.openmeta.data', json.dumps(
@@ -142,7 +142,7 @@ def tmdb_play_episode(id, season, episode):
 		if trakt_ids != None:
 			params[lang].update(trakt_ids)
 		params[lang]['info'] = show_info
-		params[lang] = text.to_unicode(params[lang])
+		params[lang] = text.to_str(params[lang])
 	link = play_base.on_play_video(players, params, trakt_ids)
 	if link:
 		plugin.setProperty('plugin.video.openmeta.data', json.dumps(
@@ -239,7 +239,7 @@ def trakt_play_episode(id, season, episode):
 		if trakt_ids != None:
 			params[lang].update(trakt_ids)
 		params[lang]['info'] = show_info
-		params[lang] = text.to_unicode(params[lang])
+		params[lang] = text.to_str(params[lang])
 	link = play_base.on_play_video(players, params, trakt_ids)
 	if link:
 		plugin.setProperty('plugin.video.openmeta.data', json.dumps(
@@ -342,7 +342,7 @@ def tvmaze_play_episode(id, season, episode, title=None):
 		if trakt_ids != None:
 			params[lang].update(trakt_ids)
 		params[lang]['info'] = show_info
-		params[lang] = text.to_unicode(params[lang])
+		params[lang] = text.to_str(params[lang])
 	link = play_base.on_play_video(players, params, trakt_ids)
 	if link:
 		plugin.setProperty('plugin.video.openmeta.data', json.dumps(

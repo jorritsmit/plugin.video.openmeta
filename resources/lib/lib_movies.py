@@ -10,10 +10,10 @@ def query_movies_server(url):
 	return json.loads(response.read())
 
 def update_library():
-	library_folder = plugin.get_setting('movies_library_folder', unicode)
+	library_folder = plugin.get_setting('movies_library_folder', str)
 	if not xbmcvfs.exists(library_folder):
 		return
-	tools.scan_library(path=plugin.get_setting('movies_library_folder', unicode))
+	tools.scan_library(path=plugin.get_setting('movies_library_folder', str))
 
 def sync_trakt_collection():
 	from resources.lib import nav_movies

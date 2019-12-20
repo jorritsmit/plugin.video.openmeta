@@ -89,7 +89,7 @@ def merge_dicts(*dict_args):
 	return result
 
 def to_utf8(obj):
-	if isinstance(obj, unicode):
+	if isinstance(obj, str):
 		obj = obj.encode('utf-8', 'ignore')
 	elif isinstance(obj, dict):
 		obj = deepcopy(obj)
@@ -101,18 +101,18 @@ def to_utf8(obj):
 		pass
 	return obj
 
-def to_unicode(obj):
+def to_str(obj):
 	if isinstance(obj, basestring):
 		try:
-			obj = unicode(obj, 'utf-8')
+			obj = str(obj, 'utf-8')
 		except TypeError:
 			pass
 	elif isinstance(obj, dict):
 		obj = deepcopy(obj)
 		for key, val in obj.items():
-			obj[key] = to_unicode(val)
+			obj[key] = to_str(val)
 	elif obj is not None and hasattr(obj, '__iter__'):
-		obj = obj.__class__([to_unicode(x) for x in obj])
+		obj = obj.__class__([to_str(x) for x in obj])
 	else:
 		pass
 	return obj
@@ -188,17 +188,17 @@ def text_to_number(text):
 			return ''
 
 def equals(a, b):
-	return to_unicode(a) == to_unicode(b)
+	return to_str(a) == to_str(b)
 
 def contains(a, b):
-	return to_unicode(a) in to_unicode(b)
+	return to_str(a) in to_str(b)
 
 def is_ascii(s):
 	try:
 		if isinstance(s, basestring):
 			s.decode()
 		return True
-	except UnicodeDecodeError or UnicodeEncodeError:
+	except strDecodeError or strEncodeError:
 		pass
 	return False
 

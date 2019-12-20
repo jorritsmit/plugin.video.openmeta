@@ -8,7 +8,7 @@ from resources.lib.xswift2 import plugin
 
 
 def update_library():
-	folder_path = plugin.get_setting('tv_library_folder', unicode)
+	folder_path = plugin.get_setting('tv_library_folder', str)
 	if not xbmcvfs.exists(folder_path):
 		return
 	library_folder = setup_library(folder_path)
@@ -30,7 +30,7 @@ def update_library():
 	if clean_needed:
 		plugin.setProperty('plugin.video.openmeta.clean_library', 'true')
 	if updated > 0:
-		tools.scan_library(path=plugin.get_setting('tv_library_folder', unicode))
+		tools.scan_library(path=plugin.get_setting('tv_library_folder', str))
 
 def sync_trakt_collection():
 	from resources.lib import nav_tvshows
